@@ -85,7 +85,7 @@ void loop () {
   }
   client.loop();
   delay(1000);
-
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 }
 void Eat() {
   Serial.println("กิน");
