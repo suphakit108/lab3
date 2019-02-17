@@ -5,7 +5,6 @@ RtcDS1307<TwoWire> Rtc(Wire);
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x3F, D1, D2);
 char timeline[16];
-#include <Wire.h>
 #include <Adafruit_MCP23017.h>
 Adafruit_MCP23017 mcp;
 void setup() {

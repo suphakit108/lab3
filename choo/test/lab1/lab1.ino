@@ -26,7 +26,7 @@ void setup()
   Serial.begin(115200);
   Serial.println("Load Cell");
   scale.set_scale(calibration_factor); 
-  scale.set_offset(zero_factor);   
+  scale.tare(zero_factor);   
 }
 void loop() 
 { 
@@ -35,7 +35,7 @@ void loop()
   String data = String((get_units_kg()+offset)+num, DEC_POINT);
   Serial.print(data);
   Serial.println(" kg");
-  RawValue = analogRead(analogIn);
+//  RawValue = analogRead(a0);
   Serial.println(RawValue);
   mcp.digitalWrite(MCP_LEDTOG2, 0);
   mcp.digitalWrite(MCP_LEDTOG1, 1023);

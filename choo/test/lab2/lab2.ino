@@ -33,6 +33,7 @@ void setup()
   mcp.pinMode(MCP_LEDTOG2, OUTPUT);  // Toggle LED 2
   Serial.begin(115200);
   Serial.println("Load Cell");
+  pinMode(analogIn,INPUT);
   scale.set_scale(calibration_factor); 
   scale.set_offset(zero_factor);   
 }
