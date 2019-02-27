@@ -38,5 +38,14 @@ int Chlktime(const RtcDateTime& dt) {
     MoterNO();
     delay(2000);
   }
+  if (Timep[0] == dt.Hour() && Timep[1] == dt.Minute() && (s == dt.Second() || s + 1 == dt.Second() || s + 2 == dt.Second())) {
+    clk = 1;
+    day = 3;
+    delay(2000);
+  }
+  if (0 == dt.Hour() && 0 == dt.Minute() && (s == dt.Second() || s + 1 == dt.Second() || s + 2 == dt.Second())) {
+    day++;
+    delay(2000);
+  }
 }
 

@@ -1,5 +1,5 @@
 void pumt() {
-  if (clk == 1) {
+  if (clk == 1 && day == 3) {
     PumON();
     clk = 2;
   }
@@ -14,6 +14,7 @@ void pumt() {
   if (digitalRead(D5) + digitalRead(D6) == 0 && clk == 3) {
     VoilOFF();
     clk = 0;
+    day=0;
   }
 
 }

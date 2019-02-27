@@ -5,6 +5,8 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <LiquidCrystal_I2C.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 LiquidCrystal_I2C lcd(0x3F, D1, D2);
 //=====================================
 const char* ssid = "Computer";
@@ -36,11 +38,16 @@ RtcDS1307<TwoWire> Rtc(Wire);
 #define countof(a) (sizeof(a) / sizeof(a[0])) // time 
 char datestring[20];
 //=====================================
-int clk = 0;
+#define ONE_WIRE_BUS D3
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+//=====================================
+int clk = 0,day=0;
 int deful = 0;
-int Time1[4], Time2[4], Time3[4], CTime = 0;
-int h = 17, m = 2 , s = 0;
-float Kgall;
+int Time1[4], Time2[4], Time3[4],Timep[3] ,CTime = 0;
+int h = 17, m = 2 , s = 0,h1,m1;
+float Kgall,tt;
+int level;
 void setup()
 {
   WiFi.mode(WIFI_STA);
@@ -56,18 +63,20 @@ void setup()
   mcp.pinMode(7, OUTPUT);
   mcp.pinMode(8, OUTPUT);
   Serial.begin(115200);
+  sensors.begin();
   pinMode(analogIn, INPUT);
   pinMode(D5, INPUT);
   pinMode(D6, INPUT);
-  PumOFF();
   Serial.println("Load Cell");
   ConnectWifi();
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
   PumOFF();
+  MoterOFF();
 }
 float eat = 0, Kg = 2, OldKg;
 void loop () {
+   level = digitalRead(D5) + digitalRead(D6);
   if (WiFi.status() == WL_CONNECTED) {
     lcd.clear();
     lcd.print("WiFi Connected");
@@ -81,6 +90,10 @@ void loop () {
   RtcDateTime now = Rtc.GetDateTime();
   printDateTime(now);
   Chlktime(now);
+  sensors.requestTemperatures();
+  tt=sensors.getTempCByIndex(0);
+  sensors.getTempFByIndex(0);
+  Serial.println(tt);
   if (clk == 0) {
     kg();
     Serial.print("eat = ");
@@ -99,28 +112,26 @@ void loop () {
       STETime();
     }
   }
-  if (mcp.digitalRead(10) != 0) {
-    clk = 1;
-  }
+
   if (clk > 0) {
     pumt();
   }
 
   delay(1000);
-  //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 }
 void Eat() {
-  Serial.println("กิน");
+  Serial.println("eat");
   if (OldKg - Kgall > Kg) {
     MoterOFF();
+    MoterOFF();
     eat = 0;
-    Serial.println("อิ่ม");
+    Serial.println("done");
     CTime++;
   }
   if (CTime == 3) {
     CTime = 0;
   }
-  if (analogRead(analogIn) < 800) {
+  if (analogRead(analogIn) < 740) {
     MoterOFF();
     delay(1000);
     MoterRE();

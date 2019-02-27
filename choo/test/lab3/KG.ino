@@ -10,6 +10,6 @@ void kg() {
 
 float get_units_kg()
 {
-  float num = -81.55;
+  float num = -81.49;
   return ((scale.get_units() * 0.453592) + offset + num);
 }
