@@ -14,13 +14,12 @@ void pumt() {
   if (digitalRead(D5) + digitalRead(D6) == 0 && clk == 3) {
     VoilOFF();
     clk = 0;
-    day=0;
+    day = 0;
   }
 
 }
 void PumON() {
   mcp.digitalWrite(7, LOW);
-  Serial.print("Casdasdasd ");
 }
 void PumOFF() {
   mcp.digitalWrite(7, HIGH);

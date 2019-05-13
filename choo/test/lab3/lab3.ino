@@ -42,11 +42,11 @@ char datestring[20];
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 //=====================================
-int clk = 0,day=0;
+int clk = 0, day = 0;
 int deful = 0;
-int Time1[4], Time2[4], Time3[4],Timep[3] ,CTime = 0;
-int h = 17, m = 2 , s = 0,h1,m1;
-float Kgall,tt;
+int Time1[4], Time2[4], Time3[4], Timep[3] , CTime = 0;
+int h = 17, m = 2 , s = 0, h1, m1;
+float Kgall, tt;
 int level;
 void setup()
 {
@@ -76,7 +76,7 @@ void setup()
 }
 float eat = 0, Kg = 2, OldKg;
 void loop () {
-   level = digitalRead(D5) + digitalRead(D6);
+  level = digitalRead(D5) + digitalRead(D6);
   if (WiFi.status() == WL_CONNECTED) {
     lcd.clear();
     lcd.print("WiFi Connected");
@@ -91,7 +91,7 @@ void loop () {
   printDateTime(now);
   Chlktime(now);
   sensors.requestTemperatures();
-  tt=sensors.getTempCByIndex(0);
+  tt = sensors.getTempCByIndex(0);
   sensors.getTempFByIndex(0);
   Serial.println(tt);
   if (clk == 0) {

@@ -27,10 +27,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
   msg = "";
   tp = "";
   tp = topic;
-  int st[24], i;
+  int st[100], i;
   while (i < length) msg += (char)payload[i++];
-  if (tp == "/Time") {
+  Serial.println(msg);
+  if (tp == "/Time"||tp == "/pum") {
     for (i = 0; i < msg.length(); i++) {
+      Serial.println(msg[i]);
       if (msg[i] == '0') {
         st[i] = 0;
       }
@@ -62,10 +64,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
         st[i] = 9;
       }
     }
-    for (i = 0; i < msg.length(); i++) {
-      Serial.print(st[i]);
-    }
-    Serial.println();
   }
   GetTime(st);
   deful = 1;
@@ -75,9 +73,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 void GetTime(int st[]) {
   int i;
-  for ( i = 0; i < 24; i++) {
-    Serial.print(st[i]);
-  }
+
   Serial.println();
   Serial.println("asdasda");
   if (tp == "/Time") {
@@ -101,6 +97,8 @@ void GetTime(int st[]) {
     Timep[0] = st[0] * 10 + st[1];
     Timep[1] = st[2] * 10 + st[3];
     Timep[2] = st[5];
+  Serial.print(Timep[0]);
+  Serial.println(Timep[1]);
   }
   if (tp == "/come" && msg == "get") {
     int i = 0, c = 0;
@@ -125,6 +123,5 @@ void GetTime(int st[]) {
     client.publish("/come", strr);
 
   }
-
 }
 
