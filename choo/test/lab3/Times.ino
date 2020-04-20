@@ -6,11 +6,19 @@ void printDateTime(const RtcDateTime& dt)
              dt.Hour(),
              dt.Minute(),
              dt.Second() );
+             lcd.setCursor(0, 0);
+             lcd.print(datestring);
+             lcd.setCursor(0, 1);
+             lcd.print(Kgall);
+             lcd.print(" kg");
+             lcd.print(" ");
+             lcd.print(tt);
+               lcd.write(0);
+             lcd.print("C");
   Serial.println(datestring);
 }
 void STETime() {
-  Serial.println("CTime = ");
-  Serial.println(CTime);
+
   if (CTime == 0 && Time1[3] == 1 ) {
     h = Time1[0];
     m = Time1[1];
@@ -26,6 +34,7 @@ void STETime() {
     m = Time3[1];
     Kg  = float(Time3[2]) / 1000;
   }
+  deful=0;
 }
 int Chlktime(const RtcDateTime& dt) {
   Serial.println(" H = ");
@@ -36,16 +45,16 @@ int Chlktime(const RtcDateTime& dt) {
     eat = 1;
     OldKg = Kgall;
     MoterNO();
-    delay(2000);
+//    delay(2000);
   }
   if (Timep[0] == dt.Hour() && Timep[1] == dt.Minute() && (s == dt.Second() || s + 1 == dt.Second() || s + 2 == dt.Second())) {
     clk = 1;
     day = 3;
-    delay(2000);
+//    delay(2000);
   }
   if (0 == dt.Hour() && 0 == dt.Minute() && (s == dt.Second() || s + 1 == dt.Second() || s + 2 == dt.Second())) {
     day++;
-    delay(2000);
+//    delay(2000);
   }
 }
 

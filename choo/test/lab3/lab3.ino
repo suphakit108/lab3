@@ -7,12 +7,21 @@
 #include <LiquidCrystal_I2C.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <FS.h>
+#include <DNSServer.h>
+#include <ESP8266WebServer.h>
+#include <WiFiManager.h>
+#include <ArduinoJson.h>
 LiquidCrystal_I2C lcd(0x3F, D1, D2);
 //=====================================
 const char* ssid = "Computer";
 const char* password = "571733022";     // Config MQTT Server
-#define mqtt_server "m11.cloudmqtt.com"
-#define mqtt_port 19443
+char mqtt_server[40] = "m11.cloudmqtt.com";
+char espport[6] ;
+int mqtt_port = 19443;
+char host[40];
+char device_name[34];
+int port;
 #define mqtt_user "test"
 #define mqtt_password "12345"
 WiFiClient espClient;
@@ -48,12 +57,28 @@ int Time1[4], Time2[4], Time3[4], Timep[3] , CTime = 0;
 int h = 17, m = 2 , s = 0, h1, m1;
 float Kgall, tt;
 int level;
+//======================================
+byte customChar8[8] = {
+  B00111,
+  B00101,
+  B00111,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000
+};
+//flag for saving data
+bool shouldSaveConfig = false;
+
+//callback notifying us of the need to save config
+void saveConfigCallback () {
+  Serial.println("Should save config");
+  shouldSaveConfig = true;
+}
+
 void setup()
-{
-  WiFi.mode(WIFI_STA);
-  scale.set_scale(calibration_factor);
-  scale.set_offset(zero_factor);
-  Rtc.Begin();
+{ Rtc.Begin();
   lcd.begin();
   mcp.begin();      // Default device address 0
   mcp.pinMode(MCP_LEDTOG1, OUTPUT);  // Toggle LED 1
@@ -63,84 +88,152 @@ void setup()
   mcp.pinMode(7, OUTPUT);
   mcp.pinMode(8, OUTPUT);
   Serial.begin(115200);
-  sensors.begin();
-  pinMode(analogIn, INPUT);
   pinMode(D5, INPUT);
   pinMode(D6, INPUT);
+  PumOFF();
+  MoterOFF();
+  WiFi.mode(WIFI_STA);
+  scale.set_scale(calibration_factor);
+  scale.set_offset(zero_factor);
+
+  sensors.begin();
+  pinMode(analogIn, INPUT);
+
   Serial.println("Load Cell");
   ConnectWifi();
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
-  PumOFF();
-  MoterOFF();
+
+  //     lcd.init();
+  lcd.backlight();
+  lcd.createChar(0, customChar8);
 }
-float eat = 0, Kg = 2, OldKg;
+float  Kg = 2, OldKg;
+int eat = 0;
 void loop () {
-  level = digitalRead(D5) + digitalRead(D6);
-  if (WiFi.status() == WL_CONNECTED) {
+  deful = 0 ;
+  if (mcp.digitalRead(10)) {
     lcd.clear();
-    lcd.print("WiFi Connected");
+    lcd.print("192.168.4.1");
+    wifi_manager_loop();
   }
-  if (WiFi.status() != WL_CONNECTED) {
-    lcd.clear();
-    lcd.print("WiFi Notconnect");
-  }
-  mqtt();
-  client.loop();
-  RtcDateTime now = Rtc.GetDateTime();
-  printDateTime(now);
-  Chlktime(now);
-  sensors.requestTemperatures();
-  tt = sensors.getTempCByIndex(0);
-  sensors.getTempFByIndex(0);
-  Serial.println(tt);
-  if (clk == 0) {
-    kg();
-    Serial.print("eat = ");
-    Serial.println(eat);
-    Serial.print("OldKg = ");
-    Serial.println(OldKg);
-    Serial.print(Kgall);
-    Serial.print(" = ");
-    Serial.println(Kg);
-    Serial.print("deful =");
-    Serial.println(deful);
-    if (eat == 1) {
-      Eat();
-    }
-    if (deful != 0) {
-      STETime();
-    }
-  }
+  else {
+    level = digitalRead(D5) + digitalRead(D6);
+    if (WiFi.status() == WL_CONNECTED) {
+      lcd.clear();
 
-  if (clk > 0) {
-    pumt();
-  }
+    }
+    if (WiFi.status() != WL_CONNECTED) {
+      lcd.clear();
 
-  delay(1000);
+    }
+    mqtt();
+    client.loop();
+    RtcDateTime now = Rtc.GetDateTime();
+    printDateTime(now);
+    Chlktime(now);
+    sensors.requestTemperatures();
+    tt = sensors.getTempCByIndex(0);
+    sensors.getTempFByIndex(0);
+
+    if (clk == 0) {
+      int i = 0;
+      kg();
+      Serial.print("deful =");
+      Serial.println(deful);
+      Serial.print(h);
+      Serial.println(" : ");
+      Serial.println(m);
+      Serial.println("CTime = ");
+      Serial.println(CTime);
+      Serial.print("Time1 = ");
+      Serial.print(Time1[0]);
+      Serial.print(" : ");
+      Serial.print(Time1[1]);
+      Serial.print(" = ");
+      Serial.println(Time1[3]);
+      Serial.print("Time2 = ");
+      Serial.print(Time2[0]);
+      Serial.print(" : ");
+      Serial.print(Time2[1]);
+      Serial.print(" = ");
+      Serial.println(Time2[3]);
+      Serial.print("Time3 = ");
+      Serial.print(Time3[0]);
+      Serial.print(" : ");
+      Serial.print(Time3[1]);
+      Serial.print(" = ");
+      Serial.println(Time3[3]);
+      if (eat == 1) {
+        for (i = 0; i < 500; i++) {
+         if(eat == 0){
+          i=500;
+         }
+          lcd.clear();
+          lcd.print("eat = ");
+          lcd.print(eat);
+          Eat();
+          Serial.println(eat);
+          delay(200);
+        }
+      }
+      if (eat != 1) {
+        MoterOFF();
+        MoterOFF();
+        delay(1000);
+
+      }
+      if (deful != 0) {
+        STETime();
+      }
+
+    }
+
+    if (clk > 0) {
+      kg();
+      pumt();
+    }
+
+  }
 }
-void Eat() {
-  Serial.println("eat");
-  if (OldKg - Kgall > Kg) {
-    MoterOFF();
-    MoterOFF();
-    eat = 0;
-    Serial.println("done");
-    CTime++;
-  }
-  if (CTime == 3) {
-    CTime = 0;
-  }
-  if (analogRead(analogIn) < 740) {
-    MoterOFF();
-    delay(1000);
-    MoterRE();
-    delay(1000);
-    MoterNO();
-    delay(1000);
-    MoterOFF();
-    MoterNO();
+int Eat() {
+  kg();
+  float sss = OldKg - Kgall;
+  Serial.print(OldKg);
+  Serial.print(" - ");
+  Serial.print(Kgall);
+  Serial.print(" = ");
+  Serial.println(sss);
+  Serial.println(Kg);
 
+  if (Kgall >= 0) {
+    if (sss > Kg) {
+      MoterOFF();
+      MoterOFF();
+      Serial.println("done");
+      CTime++;
+      deful = 1;
+      eat = 0;
+      Serial.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+      //      return 0;
+    }
+    //    else {
+    //      return 1;
+    //    }
+    if (CTime == 3) {
+      CTime = 0;
+    }
+    //    if (analogRead(analogIn) < 740) {
+    //      MoterOFF();
+    //      delay(1000);
+    //      MoterRE();
+    //      delay(1000);
+    //      MoterNO();
+    //      delay(1000);
+    //      MoterOFF();
+    //      MoterNO();
+    //
+    //    }
   }
 }
 

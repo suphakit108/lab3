@@ -91,14 +91,12 @@ void GetTime(int st[]) {
     Time3[1] = st[18] * 10 + st[19];
     Time3[2] = st[20] * 100 + st[21] * 10 + st[22];
     Time3[3] = st[23];
-    deful = 1;
+    deful = 0;
   }
   if (tp == "/pum") {
-    Timep[0] = st[0] * 10 + st[1];
-    Timep[1] = st[2] * 10 + st[3];
-    Timep[2] = st[5];
-  Serial.print(Timep[0]);
-  Serial.println(Timep[1]);
+
+    clk = 1;
+   deful = 0;
   }
   if (tp == "/come" && msg == "get") {
     int i = 0, c = 0;

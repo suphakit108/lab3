@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>Fish Feeder via Mobile Phone</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="icon" type="image/png" href="fish.png">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
 	<link href="https://fonts.googleapis.com/css?family=Athiti|Kanit" rel="stylesheet">
@@ -11,14 +12,13 @@
 	<link rel="stylesheet" href="./css/bootstrap-material-datetimepicker.css" />
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+	<!-- <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script> -->
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
 	<script type="text/javascript" src="https://rawgit.com/FezVrasta/bootstrap-material-design/master/dist/js/material.min.js"></script>
-	<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+	<script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap-material-datetimepicker.js"></script>
 	<script src="mqttws31.js"></script>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -27,115 +27,115 @@
 	<meta charset="utf-8">
 	
 	<style> 
-	body 
-	{
-		background-image: url("BG.jpg");
-		padding-top: 30px;
-		font-family: 'Athiti', sans-serif;
-		
-	}
-	h2 
-	{
-		padding: 0 20px 10px 20px;
-		font-size: 20px;
-		font-weight: 400;
-		font-family: 'Athiti', sans-serif;
-	}
-	.form-control-wrapper 
-	{
-		margin: 10px 20px;
-	}
-	code 
-	{
-		padding: 10px;
-		background: #eee!important;
-		display: block;
-		color: #000;
-	}
-	code > p 
-	{
-		font-weight: bold;
-		color: #000;
-		font-size: 1.5em;
-	}
-	@media(max-width: 300px)
-	{
-		.well { margin : 0;}
-	}
-	.well { 
-		background-color: #ffffff;
-		background-color:hsla(15, 100%, 100%, 0.8);
-	}
-	.switch {
-		position: relative;
-		display: inline-block;
-		width: 46px;
-		height: 18px;
-	}
+		body 
+		{
+			background-image: url("BG.jpg");
+			padding-top: 30px;
+			font-family: 'Athiti', sans-serif;
 
-	.switch input { 
-		opacity: 0;
-		width: 0;
-		height: 0;
-	}
+		}
+		h2 
+		{
+			padding: 0 20px 10px 20px;
+			font-size: 20px;
+			font-weight: 400;
+			font-family: 'Athiti', sans-serif;
+		}
+		.form-control-wrapper 
+		{
+			margin: 10px 20px;
+		}
+		code 
+		{
+			padding: 10px;
+			background: #eee!important;
+			display: block;
+			color: #000;
+		}
+		code > p 
+		{
+			font-weight: bold;
+			color: #000;
+			font-size: 1.5em;
+		}
+		@media(max-width: 300px)
+		{
+			.well { margin : 0;}
+		}
+		.well { 
+			background-color: #ffffff;
+			background-color:hsla(15, 100%, 100%, 0.8);
+		}
+		.switch {
+			position: relative;
+			display: inline-block;
+			width: 46px;
+			height: 18px;
+		}
 
-	.slider {
-		position: absolute;
-		cursor: pointer;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #ccc;
-		-webkit-transition: .4s;
-		transition: .4s;
-	}
+		.switch input { 
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
 
-	.slider:before {
-		position: absolute;
-		content: "";
-		height: 10px;
-		width: 10px;
-		left: 4px;
-		bottom: 4px;
-		background-color: white;
-		-webkit-transition: .4s;
-		transition: .4s;
-	}
+		.slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #ccc;
+			-webkit-transition: .4s;
+			transition: .4s;
+		}
 
-	input:checked + .slider {
-		background-color: green;
-	}
+		.slider:before {
+			position: absolute;
+			content: "";
+			height: 10px;
+			width: 10px;
+			left: 4px;
+			bottom: 4px;
+			background-color: white;
+			-webkit-transition: .4s;
+			transition: .4s;
+		}
 
-	input:focus + .slider {
-		box-shadow: 0 0 1px #2196F3;
-	}
+		input:checked + .slider {
+			background-color: green;
+		}
 
-	input:checked + .slider:before {
-		-webkit-transform: translateX(26px);
-		-ms-transform: translateX(26px);
-		transform: translateX(26px);
-	}
+		input:focus + .slider {
+			box-shadow: 0 0 1px #2196F3;
+		}
 
-	/* Rounded sliders */
-	.slider.round {
-		border-radius: 34px;
-	}
+		input:checked + .slider:before {
+			-webkit-transform: translateX(26px);
+			-ms-transform: translateX(26px);
+			transform: translateX(26px);
+		}
 
-	.slider.round:before {
-		border-radius: 50%;
-	}
-</style>
-<script>
-	(function(i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function() {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o),
-		m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
+		/* Rounded sliders */
+		.slider.round {
+			border-radius: 34px;
+		}
+
+		.slider.round:before {
+			border-radius: 50%;
+		}
+	</style>
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
 		// m.parentNode.insertBefore(a, m)
 	})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
@@ -146,9 +146,9 @@
 <script>
 	var config = {
 		mqtt_server: "m11.cloudmqtt.com",
-		mqtt_websockets_port: 39443,
+		mqtt_websockets_port: 38189,
 		mqtt_user: "test",
-		mqtt_password: "12345"
+		mqtt_password: "123456"
 	};
 
 

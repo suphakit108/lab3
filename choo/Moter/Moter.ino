@@ -31,8 +31,8 @@ Serial.begin (9600);
 void loop() {
    Serial.println("Start");
    
-  mcp.digitalWrite(MCP_LEDTOG2, 0);
-  mcp.digitalWrite(MCP_LEDTOG1, 1023);
+  mcp.digitalWrite(MCP_LEDTOG2, 1023);
+  mcp.digitalWrite(MCP_LEDTOG1, 0);
   
   delay(1000);
 

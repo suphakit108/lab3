@@ -27,142 +27,142 @@
 	<meta charset="utf-8">
 	
 	<style> 
-	body 
-	{
-		background-image: url("BG.jpg");
-		padding-top: 30px;
-		font-family: 'Athiti', sans-serif;
-		
-
-	}
-	div.dtp-time {
-		background: #92f2ed;
-		color: #aa3232;
-
-	}
-	line[Attributes Style] {
-		stroke: rgb(139, 195, 74);
-		stroke-width: 8;
-		transform: rotate(60deg);
-	}
-	circle[Attributes Style] {
-		r: 30;
-		cx: 140.296;
-		cy: -81;
-		fill: rgb(139, 195, 74);
-	}
-	h2 
-	{
-		padding: 0 20px 10px 20px;
-		font-size: 20px;
-		font-weight: 400;
-	}
-	.form-control-wrapper 
-	{
-		margin: 10px 20px;
-	}
-	code 
-	{
-		padding: 10px;
-		background: #eee!important;
-		display: block;
-		color: #000;
-	}
-	code > p 
-	{
-		font-weight: bold;
-		color: #000;
-		font-size: 1.5em;
-	}
-	@media(max-width: 300px)
-	{
-		.well { margin : 0px;}
-	}
-	.well { 
-		background-color: #ffffff;
-		background-blend-mode: multiply;
-		background-color:hsla(15, 100%, 100%, 0.8);
-		margin: auto;
-
-	}
-	.switch {
-		position: relative;
-		display: inline-block;
-		width: 46px;
-		height: 18px;
-	}
-
-	.switch input { 
-		opacity: 0;
-		width: 0;
-		height: 0;
-	}
-
-	.slider {
-		position: absolute;
-		cursor: pointer;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #b1aeae;
-		-webkit-transition: .4s;
-		transition: .4s;
-	}
-
-	.slider:before {
-		position: absolute;
-		content: "";
-		height: 10px;
-		width: 10px;
-		left: 4px;
-		bottom: 4px;
-		background-color: white;
-		-webkit-transition: .4s;
-		transition: .4s;
-	}
-
-	input:checked + .slider {
-		background-color: green;
-	}
-
-	input:focus + .slider {
-		box-shadow: 0 0 1px #2196F3;
-	}
-
-	input:checked + .slider:before {
-		-webkit-transform: translateX(26px);
-		-ms-transform: translateX(26px);
-		transform: translateX(26px);
-	}
-
-	/* Rounded sliders */
-	.slider.round {
-		border-radius: 34px;
-	}
-
-	.slider.round:before {
-		border-radius: 50%;
-	}
-</style>
+		body 
+		{
+			background-image: url("BG.jpg");
+			padding-top: 30px;
+			font-family: 'Athiti', sans-serif;
 
 
-<script>
-	var config = {
-		mqtt_server: "m11.cloudmqtt.com",
-		mqtt_websockets_port: 39443,
-		mqtt_user: "test",
-		mqtt_password: "12345"
-	};
+		}
+		div.dtp-time {
+			background: #92f2ed;
+			color: #aa3232;
+
+		}
+		line[Attributes Style] {
+			stroke: rgb(139, 195, 74);
+			stroke-width: 8;
+			transform: rotate(60deg);
+		}
+		circle[Attributes Style] {
+			r: 30;
+			cx: 140.296;
+			cy: -81;
+			fill: rgb(139, 195, 74);
+		}
+		h2 
+		{
+			padding: 0 20px 10px 20px;
+			font-size: 20px;
+			font-weight: 400;
+		}
+		.form-control-wrapper 
+		{
+			margin: 10px 20px;
+		}
+		code 
+		{
+			padding: 10px;
+			background: #eee!important;
+			display: block;
+			color: #000;
+		}
+		code > p 
+		{
+			font-weight: bold;
+			color: #000;
+			font-size: 1.5em;
+		}
+		@media(max-width: 300px)
+		{
+			.well { margin : 0px;}
+		}
+		.well { 
+			background-color: #ffffff;
+			background-blend-mode: multiply;
+			background-color:hsla(15, 100%, 100%, 0.8);
+			margin: auto;
+
+		}
+		.switch {
+			position: relative;
+			display: inline-block;
+			width: 46px;
+			height: 18px;
+		}
+
+		.switch input { 
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #b1aeae;
+			-webkit-transition: .4s;
+			transition: .4s;
+		}
+
+		.slider:before {
+			position: absolute;
+			content: "";
+			height: 10px;
+			width: 10px;
+			left: 4px;
+			bottom: 4px;
+			background-color: white;
+			-webkit-transition: .4s;
+			transition: .4s;
+		}
+
+		input:checked + .slider {
+			background-color: green;
+		}
+
+		input:focus + .slider {
+			box-shadow: 0 0 1px #2196F3;
+		}
+
+		input:checked + .slider:before {
+			-webkit-transform: translateX(26px);
+			-ms-transform: translateX(26px);
+			transform: translateX(26px);
+		}
+
+		/* Rounded sliders */
+		.slider.round {
+			border-radius: 34px;
+		}
+
+		.slider.round:before {
+			border-radius: 50%;
+		}
+	</style>
+
+
+	<script>
+		var config = {
+			mqtt_server: "m11.cloudmqtt.com",
+			mqtt_websockets_port: 39443,
+			mqtt_user: "test",
+			mqtt_password: "12345"
+		};
 
 
 
-	var mqttSend = function(topic, msg) {
-		var message = new Paho.MQTT.Message(msg);
-		message.destinationName = topic;
-		client.send(message); 
-	}
-</script>
+		var mqttSend = function(topic, msg) {
+			var message = new Paho.MQTT.Message(msg);
+			message.destinationName = topic;
+			client.send(message); 
+		}
+	</script>
 
 </head>
 <body>
@@ -197,7 +197,7 @@
 					</div>
 					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">			
 						<label class="switch">
-							<input type="checkbox" id="cb">
+							<input type="checkbox" id="cb" onclick="checkFluency4()">
 							<span class="slider round"></span>
 						</label>
 					</div>
@@ -216,7 +216,7 @@
 					</div>
 					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">			
 						<label class="switch">
-							<input type="checkbox" id="cb2">
+							<input type="checkbox" id="cb2" onclick="checkFluency4()">
 							<span class="slider round"></span>
 						</label>
 					</div>
@@ -235,11 +235,11 @@
 					</div>
 					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">			
 						<label class="switch">
-							<input type="checkbox" id="cb3">
+							<input type="checkbox" id="cb3" onclick="checkFluency4()">
 							<span class="slider round"></span>
 						</label>
 					</div>
-				</div>
+				</div>	
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="text-align: center;">
 						<div class="form-control-wrapper">
@@ -253,30 +253,52 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style ="text-align: center;">
 						<img src=".\img\drain.png" style="width: 150px;height: 150px"> 
-						<h2 style="font-size: 30px; font-weight:bold;">ตั้งเวลาเปลี่ยนน้ำในบ่อ</h2>
+						<h2 style="font-size: 30px; font-weight:bold;">เปลี่ยนน้ำในบ่อ</h2>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style=" padding-top: 0px; padding-right: 0px; padding-left: 30px;">
-						<div class="form-control-wrapper">
-							<h4 style="font-weight:bold;" >เวลา	&nbsp;<input type="text" id="temep" style="width: 50px;margin: unset; " placeholder="" ></h4>
-						</div>
-					</div>
-					<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="    padding-top: 0px; padding-left: 0px; text-align: center;">
-						<div class="form-control-wrapper">
-							<h4 style="font-weight:bold;">ทุกๆ	&nbsp;<input type="number" id="day" style="width: 50px;margin: unset; " placeholder="">
-							วัน</h4> 
-						</div>
-					</div>
 
-				</div>
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="height: 45px; margin-top: 0px; padding-top: 0px; text-align: center; ">
 						<div class="form-control-wrapper" style="margin-top: 0px" >
 							<button type="button" class="btn btn-success "style="  padding-top: 5px; background-color: #4d88ff; 
-							color: #ffffff; border-color: #000000; border-width: initial; margin-top: 7px;" onclick="pum()" > ส่ง </button>
+							color: #ffffff; border-color: #000000; border-width: initial; margin-top: 7px;" onclick="pum()" > เปลี่ยนน้ำ </button>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="row" style="text-align: center;">
+				<h2 style="font-size: 30px; font-weight:bold;"><p>ตั้งค่าอาหารเเบบกำหนดช่วง</p></h2>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style=" padding-top: 0px; padding-right: 0px; padding-left: 30px;">
+					<div class="form-control-wrapper">
+						<h4 style="font-weight:bold;" >เวลาเริ่ม	&nbsp;<input type="text" id="time3" style="width: 50px;margin: unset; " placeholder="" ></h4>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style=" padding-top: 0px; padding-right: 0px; padding-left: 30px; text-align: right;     width: 17%;">
+					<div class="form-control-wrapper">
+						<h4 style="font-weight:bold;" >เวลาสิ้นสุด	&nbsp;<input type="text" id="time3" style="width: 50px;margin: unset; " placeholder="" ></h4>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style=" padding-top: 0px; padding-right: 0px; padding-left: 0px;     width: 14%;">
+					<div>
+						<h4 style="font-weight:bold;">จำนวน	&nbsp;<input type="number" id="Num3" style="width: 60px;margin: unset;" placeholder="">
+						&nbsp;ครั้ง</h4>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style="padding-top: 0px; padding-left: 0px;">
+					<div>
+						<h4 style="font-weight:bold;">ปริมาณ	&nbsp;<input type="number" id="Num3" style="width: 60px;margin: unset;" placeholder="">
+						&nbsp;กรัม</h4>
+					</div>
+				</div>
+				<div class="col-md-1 col-sm-1 col-xs-1 col-lg-1" style="padding-top: 15px;">			
+					<label class="switch">
+						<input type="checkbox" id="cb4" onclick="checkFluency()">
+						<span class="slider round"></span>
+					</label>
 				</div>
 			</div>
 		</div>
@@ -296,6 +318,16 @@
 
 
 	<script type="text/javascript">
+		function checkFluency(){
+			document.getElementById("cb").checked = false;
+			document.getElementById("cb2").checked = false;
+			document.getElementById("cb3").checked = false;
+			// document.getElementById("cb").checked = false;
+		}
+		function checkFluency4(){
+			document.getElementById("cb4").checked = false;
+			// document.getElementById("cb").checked = false;
+		}
 		$(document).ready(function()
 		{
 			$('#time').bootstrapMaterialDatePicker
@@ -364,8 +396,8 @@
 		var cb 
 		function myFunction(){
 			var msgg = document.getElementById("time").value;	
-			var msgg2 = document.getElementById("time").value;
-			var msgg3 = document.getElementById("time").value;
+			var msgg2 = document.getElementById("time2").value;
+			var msgg3 = document.getElementById("time3").value;
 			var num  = document.getElementById("Num").value;
 			var num2 = document.getElementById("Num2").value;
 			var num3 = document.getElementById("Num3").value;
@@ -375,7 +407,9 @@
 			msgg=msgg.replace(":", "");
 			msgg2=msgg2.replace(":", "");
 			msgg3=msgg3.replace(":", "");
-			console.log(num);
+			console.log(msgg2);
+			console.log(num2);
+			console.log(cb2);
 			if(msgg == "" && msgg2 == "" && msgg3 == "" ){
 				alert("ใส่เวลาอย่างน้อยเวลา1เวลา");
 			}	
@@ -389,21 +423,21 @@
 				if(num2 < 100){
 					num2 = "0"+num2;
 				}
-				if(num < 100){
-					num2 = "0"+num2;
+				if(num3 < 100){
+					num3 = "0"+num3;
 				}
-				msgg = msgg + num + cb + msgg2 + num2 + cb2 + msgg3 + num3 + cb;
+				msgg = msgg + num + cb + msgg2 + num2 + cb2 + msgg3 + num3 + cb3;
 					// alert(msgg);
 					mqttSend("/Time", msgg );
 				}
 			}
 			function pum(){
-				var pumt = document.getElementById("temep").value;
-				alert(pumt);
-				pumt=pumt.replace(":", "");
-				var pumt1 = document.getElementById("day").value;
-				pumt=pumt+pumt1;
-				mqttSend("/pum", pumt );
+				// var pumt = document.getElementById("temep").value;
+				// alert(pumt);
+				// pumt=pumt.replace(":", "");
+				// var pumt1 = document.getElementById("day").value;
+				// pumt=pumt+pumt1;
+				mqttSend("/pum", "on" );
 			}
 
 			function my(id){

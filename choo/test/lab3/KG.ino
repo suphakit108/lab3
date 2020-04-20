@@ -1,11 +1,11 @@
 void kg() {
-  Serial.print("Reading: ");
+//  Serial.print("Reading: ");
   Kgall = get_units_kg();
   String data = String((Kgall), DEC_POINT);
-  Serial.print(data);
-  Serial.println(" kg");
+//  Serial.print(data);
+//  Serial.println(" kg");
   RawValue = analogRead(analogIn);
-  Serial.println(RawValue);
+//  Serial.println(RawValue);
 }
 
 float get_units_kg()
