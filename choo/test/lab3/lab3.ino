@@ -56,7 +56,10 @@ int deful = 0;
 int Time1[4], Time2[4], Time3[4], Timep[3] , CTime = 0;
 int h = 17, m = 2 , s = 0, h1, m1;
 float Kgall, tt;
+String msg = "";
+String tp = "";
 int level;
+ int st[100];
 //======================================
 byte customChar8[8] = {
   B00111,
@@ -70,6 +73,7 @@ byte customChar8[8] = {
 };
 //flag for saving data
 bool shouldSaveConfig = false;
+bool success;
 
 //callback notifying us of the need to save config
 void saveConfigCallback () {
@@ -88,8 +92,16 @@ void setup()
   mcp.pinMode(7, OUTPUT);
   mcp.pinMode(8, OUTPUT);
   Serial.begin(115200);
+  success = SPIFFS.begin();
+  tp="/Time";
+  msg=spiffs_Read();
+  PlassInt();
+  GetTime();
+ //delay(10000);
+  deful = 1;
   pinMode(D5, INPUT);
   pinMode(D6, INPUT);
+//  pinMode(A0, INPUT);
   PumOFF();
   MoterOFF();
   WiFi.mode(WIFI_STA);
@@ -112,7 +124,7 @@ float  Kg = 2, OldKg;
 int eat = 0;
 void loop () {
   deful = 0 ;
-  if (mcp.digitalRead(10)) {
+  if (mcp.digitalRead(10)==0) {
     lcd.clear();
     lcd.print("192.168.4.1");
     wifi_manager_loop();
@@ -121,7 +133,6 @@ void loop () {
     level = digitalRead(D5) + digitalRead(D6);
     if (WiFi.status() == WL_CONNECTED) {
       lcd.clear();
-
     }
     if (WiFi.status() != WL_CONNECTED) {
       lcd.clear();
@@ -164,16 +175,21 @@ void loop () {
       Serial.print(Time3[1]);
       Serial.print(" = ");
       Serial.println(Time3[3]);
+//      
+      Serial.print("acs = ");
+      Serial.println(analogRead(A0));
       if (eat == 1) {
         for (i = 0; i < 500; i++) {
+         
+          lcd.clear();
+          lcd.print("feed = ");
+          lcd.print(OldKg - Kgall);
+          lcd.print(" kg ");
+          Eat();
+          Serial.println(eat);
          if(eat == 0){
           i=500;
          }
-          lcd.clear();
-          lcd.print("eat = ");
-          lcd.print(eat);
-          Eat();
-          Serial.println(eat);
           delay(200);
         }
       }
@@ -181,15 +197,13 @@ void loop () {
         MoterOFF();
         MoterOFF();
         delay(1000);
-
       }
-      if (deful != 0) {
+      if (deful != 0 ) {
         STETime();
       }
-
     }
 
-    if (clk > 0) {
+    if (clk > 0 &&  eat != 1) {
       kg();
       pumt();
     }
@@ -198,14 +212,16 @@ void loop () {
 }
 int Eat() {
   kg();
+  int acs  = analogRead(A0);
   float sss = OldKg - Kgall;
   Serial.print(OldKg);
   Serial.print(" - ");
   Serial.print(Kgall);
-  Serial.print(" = ");
+  Serial.print(" aa ");
   Serial.println(sss);
   Serial.println(Kg);
-
+          Serial.print("acs = ");
+      Serial.println(acs);
   if (Kgall >= 0) {
     if (sss > Kg) {
       MoterOFF();
@@ -220,20 +236,20 @@ int Eat() {
     //    else {
     //      return 1;
     //    }
-    if (CTime == 3) {
-      CTime = 0;
-    }
-    //    if (analogRead(analogIn) < 740) {
-    //      MoterOFF();
-    //      delay(1000);
-    //      MoterRE();
-    //      delay(1000);
-    //      MoterNO();
-    //      delay(1000);
-    //      MoterOFF();
-    //      MoterNO();
-    //
-    //    }
+//    if (CTime == 3) {
+//      CTime = 0;
+//    }
+        if (analogRead(A0) < 780) {
+          MoterOFF();
+          delay(1000);
+          MoterRE();
+          delay(1000);
+          MoterNO();
+          delay(1000);
+          MoterOFF();
+          MoterNO();
+    
+        }
   }
 }
 

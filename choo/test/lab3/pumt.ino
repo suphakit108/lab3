@@ -5,20 +5,24 @@ void pumt() {
     d6 += digitalRead(D6);
 //    delay(200);
   }
-  Serial.print("d5 = ");
+     Serial.print("d5 = ");
   Serial.println(d5);
   Serial.print("d6 = ");
   Serial.println(d6);
-  if (d5 > 970) {
+  if (d5 > 900) {
     d5 = 1;
   } else {
     d5 = 0;
   }
-  if (d6 > 970) {
+  if (d6 > 900) {
     d6 = 1;
   } else {
     d6 = 0;
   }
+   Serial.print("d5 = ");
+  Serial.println(d5);
+  Serial.print("d6 = ");
+  Serial.println(d6);
   if (clk == 1 ) {
     PumON();
     clk = 2;

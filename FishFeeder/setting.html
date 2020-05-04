@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
-	<script type="text/javascript" src="https://rawgit.com/FezVrasta/bootstrap-material-design/master/dist/js/material.min.js"></script>
+	<!-- <script type="text/javascript" src="https://rawgit.com/FezVrasta/bootstrap-material-design/master/dist/js/material.min.js"></script> -->
 	<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap-material-datetimepicker.js"></script>
 	<script src="mqttws31.js"></script>
@@ -25,7 +25,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<meta charset="utf-8">
-	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<style> 
 		body 
 		{
@@ -160,15 +160,12 @@
 		var mqttSend = function(topic, msg) {
 			var message = new Paho.MQTT.Message(msg);
 			message.destinationName = topic;
-			client.send(message); 
+			client.send(message);
 		}
 	</script>
 
 </head>
 <body>
-
-
-	
 	<div class="container well">
 
 		<div class="row">
@@ -186,18 +183,18 @@
 				<div class="row">
 					<div class="col-md-5 col-sm-5 col-xs-5 col-lg-4" style=" padding-top: 0px; padding-right: 0px; padding-left: 30px;">
 						<div class="form-control-wrapper">
-							<h4 style="font-weight:bold;" >เวลา	&nbsp;<input type="text" id="time" style="width: 50px;margin: unset; " placeholder="" ></h4>
+							<h4 style="font-weight:bold;" >เวลา	&nbsp;<input type="time" id="time" style="width: 82.75px;/* margin: unset; */height: 27.98438px;" onkeyup="ck1();"> </h4>
 						</div>
 					</div>
 					<div class="col-md-5 col-sm-5 col-xs-5 col-lg-4" style="padding-top: 0px; padding-left: 0px;">
 						<div>
-							<h4 style="font-weight:bold;">ปริมาณ	&nbsp;<input type="number" id="Num" style="width: 60px;margin: unset;" placeholder="">
+							<h4 style="font-weight:bold;">ปริมาณ	&nbsp;<input type="number" id="Num" style="width: 60px;margin: unset;" placeholder="" onkeyup="ck1();">
 							&nbsp;กรัม</h4>
 						</div>
 					</div>
-					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">			
+					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">
 						<label class="switch">
-							<input type="checkbox" id="cb" onclick="checkFluency4()">
+							<input type="checkbox" id="cb" >
 							<span class="slider round"></span>
 						</label>
 					</div>
@@ -205,18 +202,18 @@
 				<div class="row">
 					<div class="col-md-5 col-sm-5 col-xs-5 col-lg-4" style=" padding-top: 0px; padding-right: 0px; padding-left: 30px;">
 						<div class="form-control-wrapper">
-							<h4 style="font-weight:bold;" >เวลา	&nbsp;<input type="text" id="time2" style="width: 50px;margin: unset; " placeholder="" ></h4>
+							<h4 style="font-weight:bold;" >เวลา	&nbsp;<input type="time" id="time2" style="width: 82.75px;/* margin: unset; */height: 27.98438px;" onkeyup="ck1();" readonly> </h4>
 						</div>
 					</div>
 					<div class="col-md-5 col-sm-5 col-xs-5 col-lg-4" style="padding-top: 0px; padding-left: 0px;">
 						<div>
-							<h4 style="font-weight:bold;">ปริมาณ	&nbsp;<input type="number" id="Num2" style="width: 60px;margin: unset;" placeholder="">
+							<h4 style="font-weight:bold;">ปริมาณ	&nbsp;<input type="number" id="Num2" style="width: 60px;margin: unset;" placeholder="" onkeyup="ck1();" readonly>
 							&nbsp;กรัม</h4>
 						</div>
 					</div>
-					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">			
+					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">
 						<label class="switch">
-							<input type="checkbox" id="cb2" onclick="checkFluency4()">
+							<input type="checkbox" id="cb2" >
 							<span class="slider round"></span>
 						</label>
 					</div>
@@ -224,22 +221,22 @@
 				<div class="row">
 					<div class="col-md-5 col-sm-5 col-xs-5 col-lg-4" style=" padding-top: 0px; padding-right: 0px; padding-left: 30px;">
 						<div class="form-control-wrapper">
-							<h4 style="font-weight:bold;" >เวลา	&nbsp;<input type="text" id="time3" style="width: 50px;margin: unset; " placeholder="" ></h4>
+							<h4 style="font-weight:bold;" >เวลา	&nbsp;<input type="time" id="time3" style="width: 82.75px;/* margin: unset; */height: 27.98438px;" onkeyup="ck1();" readonly> </h4>
 						</div>
 					</div>
 					<div class="col-md-5 col-sm-5 col-xs-5 col-lg-4" style="padding-top: 0px; padding-left: 0px;">
 						<div>
-							<h4 style="font-weight:bold;">ปริมาณ	&nbsp;<input type="number" id="Num3" style="width: 60px;margin: unset;" placeholder="">
+							<h4 style="font-weight:bold;">ปริมาณ	&nbsp;<input type="number" id="Num3" style="width: 60px;margin: unset;" placeholder="" onkeyup="ck1();" readonly>
 							&nbsp;กรัม</h4>
 						</div>
 					</div>
-					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">			
+					<div class="col-md-2 col-sm-2 col-xs-2 col-lg-4" style="padding-top: 15px;">
 						<label class="switch">
-							<input type="checkbox" id="cb3" onclick="checkFluency4()">
+							<input type="checkbox" id="cb3" >
 							<span class="slider round"></span>
 						</label>
 					</div>
-				</div>	
+				</div>
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="text-align: center;">
 						<div class="form-control-wrapper">
@@ -267,41 +264,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="row" style="text-align: center;">
-				<h2 style="font-size: 30px; font-weight:bold;"><p>ตั้งค่าอาหารเเบบกำหนดช่วง</p></h2>
-			</div>
-			<div class="row">
-				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style=" padding-top: 0px; padding-right: 0px; padding-left: 30px;">
-					<div class="form-control-wrapper">
-						<h4 style="font-weight:bold;" >เวลาเริ่ม	&nbsp;<input type="text" id="time3" style="width: 50px;margin: unset; " placeholder="" ></h4>
-					</div>
-				</div>
-				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style=" padding-top: 0px; padding-right: 0px; padding-left: 30px; text-align: right;     width: 17%;">
-					<div class="form-control-wrapper">
-						<h4 style="font-weight:bold;" >เวลาสิ้นสุด	&nbsp;<input type="text" id="time3" style="width: 50px;margin: unset; " placeholder="" ></h4>
-					</div>
-				</div>
-				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style=" padding-top: 0px; padding-right: 0px; padding-left: 0px;     width: 14%;">
-					<div>
-						<h4 style="font-weight:bold;">จำนวน	&nbsp;<input type="number" id="Num3" style="width: 60px;margin: unset;" placeholder="">
-						&nbsp;ครั้ง</h4>
-					</div>
-				</div>
-				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style="padding-top: 0px; padding-left: 0px;">
-					<div>
-						<h4 style="font-weight:bold;">ปริมาณ	&nbsp;<input type="number" id="Num3" style="width: 60px;margin: unset;" placeholder="">
-						&nbsp;กรัม</h4>
-					</div>
-				</div>
-				<div class="col-md-1 col-sm-1 col-xs-1 col-lg-1" style="padding-top: 15px;">			
-					<label class="switch">
-						<input type="checkbox" id="cb4" onclick="checkFluency()">
-						<span class="slider round"></span>
-					</label>
-				</div>
-			</div>
-		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 "style="text-align: center;">
@@ -324,37 +286,9 @@
 			document.getElementById("cb3").checked = false;
 			// document.getElementById("cb").checked = false;
 		}
-		function checkFluency4(){
-			document.getElementById("cb4").checked = false;
-			// document.getElementById("cb").checked = false;
-		}
+		
 		$(document).ready(function()
 		{
-			$('#time').bootstrapMaterialDatePicker
-			({
-				date: false,
-				shortTime: false,
-				format: 'HH:mm'
-			});
-			$('#time2').bootstrapMaterialDatePicker
-			({
-				date: false,
-				shortTime: false,
-				format: 'HH:mm'
-			});
-			$('#time3').bootstrapMaterialDatePicker
-			({
-				date: false,
-				shortTime: false,
-				format: 'HH:mm'
-			});
-			$('#temep').bootstrapMaterialDatePicker
-			({
-				date: false,
-				shortTime: false,
-				format: 'HH:mm'
-			});
-
 			$.material.init()
 		// Create a client instance
 		client = new Paho.MQTT.Client(config.mqtt_server, config.mqtt_websockets_port, "web_" + parseInt(Math.random() * 100, 10)); 
@@ -369,9 +303,11 @@
 			// Once a connection has been made, make a subscription and send a message.
 			// console.log("onConnect");
 			$("#status").text("Connected").removeClass().addClass("connected");
-			client.subscribe("/Time");
-			client.subscribe("/pum");
+			// client.subscribe("/Time");
+			// client.subscribe("/pum");
+			client.subscribe("/set");
 			//mqttSend("/ESP/LED", "GET");
+			mqttSend("/come", "Setting");
 		},
 		onFailure: function(e) {
 			$("#status").text("Error : " + e).removeClass().addClass("error");
@@ -389,13 +325,41 @@
 	client.onMessageArrived = function(message) {
 		// $("#status").text("onMessageArrived:" + message.payloadString).removeClass().addClass("error");
 		console.log(message.payloadString);
-		
+		if(message.payloadString=="success"){
+			// alert("Success");
+			Swal.fire(
+				'ส่งข้อมูลสำเร็จ',
+				'',
+				'success'
+				)
+		}
+		else {
+			Setting(message.payloadString);
+		}
 	}
 
 });
-		var cb 
+		function Setting(come){
+			if(come[0]=='1'){
+				document.getElementById("time").value=come[1]+come[2]+":"+come[3]+come[4];
+				document.getElementById("Num").value= parseInt(come[5]+come[6]+come[7]+come[8]);
+				document.getElementById("cb").checked=true;
+			}
+			if(come[0]=='2'){
+				document.getElementById("time2").value=come[1]+come[2]+":"+come[3]+come[4];
+				document.getElementById("Num2").value=parseInt(come[5]+come[6]+come[7]+come[8]);
+				document.getElementById("cb2").checked=true;
+			}
+			if(come[0]=='3'){
+				document.getElementById("time3").value=come[1]+come[2]+":"+come[3]+come[4];
+				document.getElementById("Num3").value=parseInt(come[5]+come[6]+come[7]+come[8]);
+				document.getElementById("cb3").checked=true;
+			}
+			ck1();
+		}
+		var cb
 		function myFunction(){
-			var msgg = document.getElementById("time").value;	
+			var msgg = document.getElementById("time").value;
 			var msgg2 = document.getElementById("time2").value;
 			var msgg3 = document.getElementById("time3").value;
 			var num  = document.getElementById("Num").value;
@@ -411,17 +375,35 @@
 			console.log(num2);
 			console.log(cb2);
 			if(msgg == "" && msgg2 == "" && msgg3 == "" ){
-				alert("ใส่เวลาอย่างน้อยเวลา1เวลา");
-			}	
+				Swal.fire(
+					'ใส่เวลาอย่างน้อยเวลา1เวลา',
+					'',
+					'error'
+					)
+			}
 			if(num == "" && num2 == "" && num3 == ""){
-				alert("ใส่ค่าอาหารอย่างน้อย1ค่า");
+				Swal.fire(
+					'ใส่ค่าอาหารอย่างน้อย1ค่า',
+					'',
+					'error'
+					)
 			}
 			if(num != "" || num2 != "" || num3 != ""){
+				if(num < 1000){
+					num = "0"+num;
+				}
 				if(num < 100){
 					num = "0"+num;
 				}
+
+				if(num2 < 1000){
+					num2 = "0"+num2;
+				}
 				if(num2 < 100){
 					num2 = "0"+num2;
+				}
+				if(num3 < 1000){
+					num3 = "0"+num3;
 				}
 				if(num3 < 100){
 					num3 = "0"+num3;
@@ -432,14 +414,39 @@
 				}
 			}
 			function pum(){
-				// var pumt = document.getElementById("temep").value;
-				// alert(pumt);
-				// pumt=pumt.replace(":", "");
-				// var pumt1 = document.getElementById("day").value;
-				// pumt=pumt+pumt1;
 				mqttSend("/pum", "on" );
 			}
 
+			function ck1(){
+				var msgg = document.getElementById("time").value;
+				var msgg2 = document.getElementById("time2").value;
+				var num  = document.getElementById("Num").value;
+				var num2 = document.getElementById("Num2").value;
+				if(msgg != "" && num !=""){
+					document.getElementById("time2").readOnly = false;
+					document.getElementById("Num2").readOnly = false;
+					document.getElementById("cb2").readOnly = false;
+
+				}
+				else{
+					document.getElementById("time2").readOnly = true;
+					document.getElementById("Num2").readOnly = true;
+					document.getElementById("time3").readOnly = true;
+					document.getElementById("Num3").readOnly = true;
+					document.getElementById("cb2").checked=false;
+					document.getElementById("cb3").checked=false;
+				}
+				if(msgg2 != "" && num2 !=""){
+					document.getElementById("time3").readOnly = false;
+					document.getElementById("Num3").readOnly = false;
+					document.getElementById("cb3").readOnly = false;
+				}
+				else{
+					document.getElementById("time3").readOnly = true;
+					document.getElementById("Num3").readOnly = true;
+					document.getElementById("cb3").checked=false;
+				}
+			}
 			function my(id){
 				var cb;
 				if( document.getElementById(id).checked){
